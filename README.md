@@ -1,29 +1,30 @@
-# Create T3 App
+# AI React Component Designer - Frontend
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Welcome to the **AI React Component Designer** frontend repository! This project is a web application that allows users to design React components such as buttons, forms, and other UI elements. You can preview, style, and adjust your components in real-time. The frontend connects to a Flask-based Python backend, which handles API calls to the OpenAI API for AI-driven component generation.
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Features
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- **AI-Powered Component Creation**: Generate React components using AI-driven prompts.
+- **Live Preview**: Instantly preview and adjust the design and styling of your components.
+- **Customizable Styling**: Tailor the look and feel of your components directly in the app.
+- **Authentication**: Secure login with NextAuth.js.
+- **Seamless Integration**: The frontend is built with TypeScript, React, and Next.js, and it connects to a Flask backend for AI processing.
 
-## Learn More
+## Tech Stack
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### Frontend
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- **React**: A JavaScript library for building user interfaces.
+- **Next.js**: A React framework with server-side rendering capabilities.
+- **TypeScript**: A statically typed superset of JavaScript.
+- **TRPC**: End-to-end typesafe APIs, used for communication between the frontend and backend.
+- **NextAuth.js**: Authentication for Next.js applications.
+- **Prisma**: An ORM (Object-Relational Mapping) for seamless database interaction.
+- **MongoDB**: A NoSQL database for storing user data, component designs, and more.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### Backend
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- **Flask**: A lightweight Python web framework used for handling API calls.
+- **OpenAI API**: Utilized for AI-driven React component generation.
