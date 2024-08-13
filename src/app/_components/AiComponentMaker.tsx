@@ -50,7 +50,7 @@ function AiComponentMaker({}: Props) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-5">
+    <div className="flex min-h-screen max-w-7xl flex-col items-center justify-center bg-gray-100 p-5">
       <h1>AI Component Maker</h1>
       <form
         onSubmit={handleSubmit}
