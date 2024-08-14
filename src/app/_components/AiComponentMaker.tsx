@@ -56,6 +56,19 @@ function AiComponentMaker({}: Props) {
         onSubmit={handleSubmit}
         className="w-full max-w-md space-y-5 rounded-lg bg-white p-6 shadow-lg"
       >
+        <select
+          className="select w-full max-w-xs"
+          onChange={(e) => setPrompt(e.target.value)}
+        >
+          <option disabled selected className="bg-[#00B8D9]">
+            Here are some ideas
+          </option>
+          <option>Button</option>
+          <option>Navbar</option>
+          <option>Footer</option>
+          <option>Input Form</option>
+          <option>LandingPage</option>
+        </select>
         <input
           type="text"
           value={prompt}
@@ -66,7 +79,7 @@ function AiComponentMaker({}: Props) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded bg-blue-500 p-2 text-white"
+          className="w-full rounded bg-[#00B8D9] p-2 text-white"
         >
           {loading ? "Generating..." : "Generate Component"}
         </button>
