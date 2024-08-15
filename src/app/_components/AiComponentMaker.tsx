@@ -2,12 +2,16 @@
 import React, { useState } from "react";
 
 type Props = {};
+//::TODO:: make that predefined component to also work with the python backend and open API
 
 function AiComponentMaker({}: Props) {
   const [component, setComponent] = useState<string | null>(null);
   const [prompt, setPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [preDefinedComponent, setPreDefinedComponent] = useState<string | null>(
+    null,
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,7 +69,7 @@ function AiComponentMaker({}: Props) {
         <div className="relative">
           <select
             className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-teal-500"
-            onChange={(e) => setPrompt(e.target.value)}
+            onChange={(e) => setPreDefinedComponent(e.target.value)}
           >
             <option disabled selected className="bg-teal-500 text-white">
               Here are some ideas
