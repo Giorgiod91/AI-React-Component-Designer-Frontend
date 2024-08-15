@@ -8,6 +8,7 @@ import AiComponentMaker from "./_components/AiComponentMaker";
 import Navbar from "./_components/Navbar";
 import About from "./_components/About";
 import Demo from "./_components/Demo";
+import Payment from "./_components/Payment";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -30,6 +31,9 @@ export default async function Home() {
       </section>
       <section className="flex min-h-screen items-center justify-center">
         <Demo />
+      </section>
+      <section className="flex min-h-screen items-center justify-center">
+        <Payment />
       </section>
     </main>
   );

@@ -93,7 +93,7 @@ function AiComponentMaker({}: Props) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-[#4696bc] p-3 text-white transition duration-300 ease-in-out hover:bg-[#357aab]"
+          className="w-full rounded-lg bg-[#4696bc] p-3 text-white opacity-90 transition duration-300 ease-in-out hover:bg-[#357aab]"
         >
           {loading ? "Generating..." : "Generate Component"}
         </button>
