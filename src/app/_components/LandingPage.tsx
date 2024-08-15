@@ -50,8 +50,10 @@ const LandingPage: React.FC<Props> = () => {
           whileTap={{ scale: 0.95, rotate: -2 }}
         />
       </div>
+
       <motion.div
-        className="absolute bottom-0 left-0 h-2 w-full bg-[#00B8D9]"
+        className="absolute bottom-0 left-0 h-2 bg-[#00B8D9]"
+        style={{ width: "100%" }}
         initial={{ x: "-100%" }}
         animate={{ x: "100%" }}
         transition={{
