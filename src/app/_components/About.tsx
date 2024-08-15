@@ -22,6 +22,10 @@ function About({}: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
+          whileHover={{
+            scale: 1.1,
+            transition: { duration: 0.3, ease: "easeOut" },
+          }}
         >
           <FaRocket className="mb-4 text-5xl text-[#4696bc]" />{" "}
           <motion.p className="text-2xl text-[#677388] transition-opacity duration-1000 ease-in-out hover:opacity-80">
@@ -35,6 +39,10 @@ function About({}: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
+          whileHover={{
+            scale: 1.1,
+            transition: { duration: 0.3, ease: "easeOut" },
+          }}
         >
           <FaPalette className="mb-4 text-5xl text-[#4696bc]" />{" "}
           <motion.p className="text-xl text-[#677388] transition-opacity duration-1000 ease-in-out hover:opacity-80">
@@ -48,6 +56,10 @@ function About({}: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
+          whileHover={{
+            scale: 1.1,
+            transition: { duration: 0.3, ease: "easeOut" },
+          }}
         >
           <FaClock className="mb-4 text-5xl text-[#4696bc]" />{" "}
           <motion.p className="text-xl text-[#677388] transition-opacity duration-1000 ease-in-out hover:opacity-80">
@@ -55,6 +67,19 @@ function About({}: Props) {
             ⏳
           </motion.p>
         </motion.div>
+        <div className="overflow-x-hidden">
+          <motion.div
+            className="bottom-0 left-0 h-2 bg-[#e0853a]"
+            style={{ width: "100%" }}
+            initial={{ x: "-100%" }}
+            animate={{ x: "100%" }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        </div>
       </div>
     </div>
   );

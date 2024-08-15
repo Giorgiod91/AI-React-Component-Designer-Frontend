@@ -1,12 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { set } from "zod";
 
 type Props = {};
 
 const LandingPage: React.FC<Props> = () => {
   return (
-    <section className="mx-auto flex max-w-7xl flex-col justify-between gap-16 px-6 pb-10 pt-8 sm:px-8 sm:pt-12 lg:flex-row lg:gap-20 lg:pb-20">
+    <section className="relative mx-auto flex max-w-7xl flex-col justify-between gap-16 overflow-x-hidden px-6 pb-10 pt-8 sm:px-8 sm:pt-12 lg:flex-row lg:gap-20 lg:pb-20">
       {/* Left Section */}
       <div className="lg:w-1/2">
         <motion.h1
@@ -14,9 +15,26 @@ const LandingPage: React.FC<Props> = () => {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          whileHover={{ color: "#00B8D9", transition: { duration: 0.3 } }}
         >
-          Design React Components with Reactify.AI 😮
+          Design React Components with Reactify.AI{" "}
+          <motion.span
+            className="inline-block"
+            whileHover={{
+              rotate: [0, 10, 20, 30, 40, 50, 60, 70, 80],
+              x: [0, 10, 20, 30, 40, 50, 60, 70, 80],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "easeInOut",
+            }}
+          >
+            😮
+          </motion.span>
         </motion.h1>
+
         <motion.p
           className="mb-6 text-lg text-[#6B7280]"
           initial={{ y: -50, opacity: 0 }}
@@ -36,7 +54,6 @@ const LandingPage: React.FC<Props> = () => {
           Start Designing 🚀
         </motion.a>
       </div>
-
       {/* Right Section */}
       <div className="flex items-center justify-center lg:w-1/2">
         <motion.img
@@ -50,7 +67,7 @@ const LandingPage: React.FC<Props> = () => {
           whileTap={{ scale: 0.95, rotate: -2 }}
         />
       </div>
-
+      {/* Blue Line */}
       <motion.div
         className="absolute bottom-0 left-0 h-2 bg-[#00B8D9]"
         style={{ width: "100%" }}
