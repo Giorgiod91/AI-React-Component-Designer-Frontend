@@ -49,6 +49,12 @@ function AiComponentMaker({}: Props) {
     );
   }
 
+  const CopyToClipBoard = () => {
+    navigator.clipboard.writeText(
+      component ? component : "No component to copy",
+    );
+  };
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-5">
       <h1>AI Component Maker</h1>
@@ -90,6 +96,9 @@ function AiComponentMaker({}: Props) {
       <h1>
         You can now Just Copy the Code and Paste it into your own react app
       </h1>
+      <button onClick={CopyToClipBoard} className="bg-[#00B8D9]">
+        Copy
+      </button>
       {error && <div className="mt-5 text-red-500">{error}</div>}
       {component && createTheFetchedComponent()}
     </div>
