@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 type Props = {};
 
 const images = [
-  "path-to-image1.jpg",
+  "/demo1.png",
   "path-to-image2.jpg",
   "path-to-image3.jpg",
   "path-to-image4.jpg",
@@ -41,7 +41,7 @@ const ImageGridItem: React.FC<{ src: string }> = ({ src }) => {
       <motion.img
         src={src}
         alt="Demo"
-        className="h-64 w-full object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+        className="h-64 w-full object-contain transition-transform duration-300 ease-in-out hover:scale-110"
       />
     </motion.div>
   );
