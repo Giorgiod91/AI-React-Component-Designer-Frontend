@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 type Props = {};
+//::TODO:: Add function if clicked on image, it will show the code snippet
 
 const images = [
   "/demo1.png",
