@@ -40,7 +40,7 @@ const LandingPage: React.FC<Props> = () => {
       {/* Right Section */}
       <div className="flex items-center justify-center lg:w-1/2">
         <motion.img
-          src="your-image-path.jpg"
+          src="/landingPage.jpg"
           alt="App preview"
           className="w-full rounded-lg shadow-lg"
           initial={{ scale: 0.8, opacity: 0 }}
