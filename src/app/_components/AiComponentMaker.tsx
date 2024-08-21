@@ -1,5 +1,13 @@
 "use client";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  FaRocket,
+  FaRobot,
+  FaRegCopy,
+  FaRegQuestionCircle,
+  FaCopy,
+} from "react-icons/fa";
 
 type Props = {};
 //::TODO:: make that predefined component to also work with the python backend and open API
@@ -60,56 +68,94 @@ function AiComponentMaker({}: Props) {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f7f9] p-5">
-      <h1 className="mb-6 text-4xl font-bold text-[#4696bc]">
-        AI Component Maker
-      </h1>
-      <form
+    <div className="relative flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#e3e8e9] to-[#ffffff] px-6 py-10 text-center">
+      <motion.h1
+        className="mb-8 flex items-center justify-center space-x-2 text-5xl font-bold text-[#4696bc]"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <FaRobot className="text-6xl" />
+        <span>AI Component Maker</span>
+        <FaRocket className="text-6xl" />
+      </motion.h1>
+
+      <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-md space-y-6 rounded-lg bg-white p-6 shadow-xl"
+        className="w-full max-w-lg transform space-y-8 rounded-lg bg-white p-8 shadow-xl ring-1 ring-[#c2a6b8] transition-transform hover:scale-105"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <div className="relative">
           <select
-            className="block w-full rounded-lg border border-[#c2a6b8] bg-[#f9f9f9] px-4 py-2 shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-[#4696bc]"
+            className="block w-full rounded-lg border border-[#c2a6b8] bg-[#f9f9f9] px-4 py-3 text-[#6b5b6d] shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-[#4696bc]"
             onChange={(e) => setPreDefinedComponent(e.target.value)}
+            value={preDefinedComponent || ""}
           >
-            <option disabled selected className="bg-[#4696bc] text-white">
-              Here are some ideas
+            <option value="" disabled>
+              Select a component type
             </option>
-            <option>Button</option>
-            <option>Navbar</option>
-            <option>Footer</option>
-            <option>Input Form</option>
-            <option>LandingPage</option>
+            <option value="Button">Button</option>
+            <option value="Navbar">Navbar</option>
+            <option value="Footer">Footer</option>
+            <option value="Input Form">Input Form</option>
+            <option value="LandingPage">LandingPage</option>
           </select>
         </div>
         <input
           type="text"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Enter a description of the component you want to generate"
-          className="mb-2 w-full rounded-lg border border-[#c2a6b8] p-3"
+          placeholder="Describe the component you want to generate"
+          className="w-full rounded-lg border border-[#c2a6b8] bg-[#f9f9f9] p-4 text-[#6b5b6d] shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-[#4696bc]"
         />
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-[#4696bc] p-3 text-white opacity-90 transition duration-300 ease-in-out hover:bg-[#357aab]"
+          className="w-full rounded-lg bg-[#4696bc] p-3 text-white opacity-90 transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
         >
           {loading ? "Generating..." : "Generate Component"}
         </button>
-      </form>
-      {loading && <div className="mt-5 text-[#7791b4]">Loading...</div>}
-      <h1 className="mt-5 text-lg text-[#c2a6b8]">
-        You can now just copy the code and paste it into your own React app
-      </h1>
-      <button
-        onClick={CopyToClipBoard}
-        className="mt-3 rounded-lg bg-[#4696bc] p-2 text-white transition duration-300 ease-in-out hover:bg-[#357aab]"
-      >
-        Copy
-      </button>
-      {error && <div className="mt-5 text-red-500">{error}</div>}
+      </motion.form>
+
+      {loading && (
+        <motion.div
+          className="mt-6 text-[#4696bc]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <FaRegQuestionCircle className="mr-2 inline-block" />
+          Loading...
+        </motion.div>
+      )}
+
       {component && createTheFetchedComponent()}
+
+      {component && (
+        <motion.button
+          onClick={CopyToClipBoard}
+          className="mt-6 flex items-center rounded-lg bg-[#4696bc] p-3 text-white transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
+          initial={{ scale: 0.95 }}
+          animate={{ scale: 1 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <FaCopy className="mr-2" />
+          Copy
+        </motion.button>
+      )}
+
+      {error && (
+        <motion.div
+          className="mt-6 text-red-500"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {error}
+        </motion.div>
+      )}
     </div>
   );
 }
