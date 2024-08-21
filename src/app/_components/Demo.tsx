@@ -19,9 +19,14 @@ const images = [
 function Demo({}: Props) {
   return (
     <div className="max-w-7xl bg-[#f5f7f9] p-6">
-      <h1 className="mb-12 text-center text-4xl font-bold text-[#4696bc]">
+      <motion.h1
+        className="pb-5 text-6xl font-bold text-[#4696bc]"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
         All of these were created with Reactify.AI
-      </h1>
+      </motion.h1>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {images.map((src, index) => (
           <ImageGridItem key={index} src={src} />
