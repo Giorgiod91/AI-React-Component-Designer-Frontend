@@ -8,7 +8,7 @@ type Props = {};
 const images = [
   "/demo1.png",
   "/dashboard.png",
-  "path-to-image3.jpg",
+  "/form.png",
   "path-to-image4.jpg",
   "path-to-image5.jpg",
   "path-to-image6.jpg",
