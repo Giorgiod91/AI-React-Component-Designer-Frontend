@@ -9,6 +9,7 @@ import Navbar from "./_components/Navbar";
 import About from "./_components/About";
 import Demo from "./_components/Demo";
 import Payment from "./_components/Payment";
+import Dashboard from "./_components/Dashboard";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -34,6 +35,9 @@ export default async function Home() {
       </section>
       <section className="flex min-h-screen items-center justify-center">
         <Payment />
+      </section>
+      <section>
+        <Dashboard />
       </section>
     </main>
   );
