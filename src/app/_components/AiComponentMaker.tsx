@@ -4,22 +4,25 @@ import { motion } from "framer-motion";
 import {
   FaRocket,
   FaRobot,
-  FaRegCopy,
   FaRegQuestionCircle,
   FaCopy,
+  FaEye,
+  FaEyeSlash,
 } from "react-icons/fa";
+import JsxParser from "react-jsx-parser";
+import { Controlled as CodeMirror } from "react-codemirror2";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material.css";
+import "codemirror/mode/javascript/javascript";
 
 type Props = {};
-//::TODO:: make that predefined component to also work with the python backend and open API
 
 function AiComponentMaker({}: Props) {
-  const [component, setComponent] = useState<string | null>(null);
+  const [componentCode, setComponentCode] = useState<string | null>(null);
   const [prompt, setPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [preDefinedComponent, setPreDefinedComponent] = useState<string | null>(
-    null,
-  );
+  const [showCode, setShowCode] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,31 +43,36 @@ function AiComponentMaker({}: Props) {
       }
 
       const data = await response.json();
+      console.log("Received Component Code:", data.component_code); // Log the received code
       if (data.component_code) {
-        setComponent(data.component_code);
+        setComponentCode(data.component_code);
       } else {
         throw new Error("Unexpected response structure");
       }
     } catch (err) {
       setError(`Failed to generate component: ${(err as Error).message}`);
-      console.error("Fetch error:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  function createTheFetchedComponent() {
-    return (
-      <div>
-        <div dangerouslySetInnerHTML={{ __html: component || "" }} />
-      </div>
-    );
-  }
-
   const CopyToClipBoard = () => {
-    navigator.clipboard.writeText(
-      component ? component : "No component to copy",
-    );
+    if (componentCode) {
+      navigator.clipboard.writeText(componentCode);
+    } else {
+      alert("No component to copy");
+    }
+  };
+
+  // Function to clean up the component code
+  const cleanComponentCode = (code: string | null) => {
+    if (code) {
+      // Remove Markdown code block delimiters
+      const cleanedCode = code.replace(/```jsx|```/g, "").trim();
+      console.log("Cleaned Component Code:", cleanedCode); // Log the cleaned code
+      return cleanedCode;
+    }
+    return null;
   };
 
   return (
@@ -87,22 +95,6 @@ function AiComponentMaker({}: Props) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="relative">
-          <select
-            className="block w-full rounded-lg border border-[#c2a6b8] bg-[#f9f9f9] px-4 py-3 text-[#6b5b6d] shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-[#4696bc]"
-            onChange={(e) => setPreDefinedComponent(e.target.value)}
-            value={preDefinedComponent || ""}
-          >
-            <option value="" disabled>
-              Select a component type
-            </option>
-            <option value="Button">Button</option>
-            <option value="Navbar">Navbar</option>
-            <option value="Footer">Footer</option>
-            <option value="Input Form">Input Form</option>
-            <option value="LandingPage">LandingPage</option>
-          </select>
-        </div>
         <input
           type="text"
           value={prompt}
@@ -131,19 +123,71 @@ function AiComponentMaker({}: Props) {
         </motion.div>
       )}
 
-      {component && createTheFetchedComponent()}
+      {componentCode && (
+        <div className="mt-8 w-full max-w-lg">
+          <div className="mb-4">
+            <h3 className="mb-2 text-xl font-semibold text-[#4696bc]">
+              Component Preview
+            </h3>
+            <div
+              className="rounded-lg bg-white p-4 shadow-lg"
+              style={{ minHeight: "300px" }}
+            >
+              <JsxParser
+                jsx={cleanComponentCode(componentCode)}
+                components={{}}
+                renderError={(error) => (
+                  <div className="text-red-500">
+                    Error rendering component: {error.message}
+                  </div>
+                )}
+              />
+            </div>
+          </div>
 
-      {component && (
-        <motion.button
-          onClick={CopyToClipBoard}
-          className="mt-6 flex items-center rounded-lg bg-[#4696bc] p-3 text-white transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
-          initial={{ scale: 0.95 }}
-          animate={{ scale: 1 }}
-          whileHover={{ scale: 1.05 }}
-        >
-          <FaCopy className="mr-2" />
-          Copy
-        </motion.button>
+          <motion.button
+            onClick={() => setShowCode(!showCode)}
+            className="mt-6 flex items-center rounded-lg bg-[#4696bc] p-3 text-white transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            {showCode ? (
+              <FaEyeSlash className="mr-2" />
+            ) : (
+              <FaEye className="mr-2" />
+            )}
+            {showCode ? "Hide Code" : "Show Code"}
+          </motion.button>
+
+          {showCode && (
+            <>
+              <div className="my-4 rounded-lg bg-white p-4 shadow-lg">
+                <CodeMirror
+                  value={componentCode}
+                  options={{
+                    mode: "javascript",
+                    theme: "material",
+                    lineNumbers: true,
+                    readOnly: true,
+                  }}
+                  onBeforeChange={() => {}}
+                />
+              </div>
+
+              <motion.button
+                onClick={CopyToClipBoard}
+                className="mt-6 flex items-center rounded-lg bg-[#4696bc] p-3 text-white transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
+                initial={{ scale: 0.95 }}
+                animate={{ scale: 1 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <FaCopy className="mr-2" />
+                Copy
+              </motion.button>
+            </>
+          )}
+        </div>
       )}
 
       {error && (
