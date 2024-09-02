@@ -15,8 +15,15 @@ const images = [
   "path-to-image7.jpg",
   "path-to-image8.jpg",
 ];
-
+const showSelectedImage = (src: string) => {
+  return (
+    <div className="flex h-[450px] w-[450px] border">
+      <img src={src} alt="Demo" className="object-contain" />
+    </div>
+  );
+};
 function Demo({}: Props) {
+  const [noImageClicked, setNoImageClicked] = React.useState(true);
   return (
     <div className="max-w-7xl bg-[#f5f7f9] p-6">
       <motion.h1
@@ -28,9 +35,13 @@ function Demo({}: Props) {
         All of these were created with Reactify.AI
       </motion.h1>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {images.map((src, index) => (
-          <ImageGridItem key={index} src={src} />
-        ))}
+        {images.map((src, index) =>
+          noImageClicked ? (
+            <ImageGridItem key={index} src={src} />
+          ) : (
+            showSelectedImage(src)
+          ),
+        )}
       </div>
     </div>
   );

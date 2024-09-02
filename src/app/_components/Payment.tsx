@@ -25,7 +25,7 @@ function Payment({}: Props) {
           }}
         >
           <h2 className="mb-4 text-3xl font-bold">10 Credits</h2>
-          <p className="mb-4 text-2xl">$5</p>
+          <p className="mb-4 text-2xl">€5</p>
           <div className="mb-4 text-left">
             <p className="mb-2 flex items-center">
               <FaCheckCircle className="mr-2 text-green-400" /> 10 API Calls
@@ -52,7 +52,7 @@ function Payment({}: Props) {
           }}
         >
           <h2 className="mb-4 text-3xl font-bold">50 Credits</h2>
-          <p className="mb-4 text-2xl">$20</p>
+          <p className="mb-4 text-2xl">€20</p>
           <div className="mb-4 text-left">
             <p className="mb-2 flex items-center">
               <FaCheckCircle className="mr-2 text-green-400" /> 50 API Calls
@@ -72,8 +72,9 @@ function Payment({}: Props) {
         </motion.div>
 
         <motion.div
-          className="flex flex-col rounded-lg bg-gradient-to-br from-[#00B8D9] to-[#00A5C4] p-6 text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
+          className="flex flex-col rounded-lg bg-gradient-to-br from-[#00B8D9] to-[#00A5C4] p-6 text-white shadow-lg transition-transform hover:shadow-xl"
           whileHover={{
+            skewY: 10,
             scale: 1.05,
             boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
           }}
@@ -97,7 +98,7 @@ function Payment({}: Props) {
               🚀
             </motion.span>
           </h2>
-          <p className="mb-4 text-2xl">$35</p>
+          <p className="mb-4 text-2xl">€35</p>
           <div className="mb-4 text-left">
             <p className="mb-2 flex items-center">
               <FaCheckCircle className="mr-2 text-green-400" /> 100 API Calls
