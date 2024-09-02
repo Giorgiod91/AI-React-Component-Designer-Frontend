@@ -13,6 +13,7 @@ import Payment from "./_components/Payment";
 import Demo1 from "./_components/Demo1";
 import Footer from "./_components/Footer";
 import NewOne from "./_components/NewOne";
+import LetSee from "./_components/LetSee";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -47,6 +48,9 @@ export default async function Home() {
       </section>
       <section>
         <Footer />
+      </section>
+      <section>
+        <LetSee />
       </section>
     </main>
   );

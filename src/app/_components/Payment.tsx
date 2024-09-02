@@ -17,6 +17,7 @@ function Payment({}: Props) {
       <h2 className="mb-12 text-2xl font-semibold text-[#6B7280]">
         Flexible Pricing, Buy Only What You Need
       </h2>
+      <p className="p-5 text-red-600">Free to use for limited time!</p>
 
       <div className="flex flex-col justify-center gap-8 md:flex-row">
         <motion.div

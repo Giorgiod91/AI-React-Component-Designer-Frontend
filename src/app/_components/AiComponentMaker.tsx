@@ -45,6 +45,7 @@ function AiComponentMaker({}: Props) {
       const data = await response.json();
       if (data.component_code) {
         setComponentCode(data.component_code);
+        console.log("Fetched component code:", data.component_code);
       } else {
         throw new Error("Unexpected response structure");
       }
@@ -63,13 +64,15 @@ function AiComponentMaker({}: Props) {
     }
   };
 
-  const cleanComponentCode = (code: string | null) => {
+  //i want to extract the jsx from the generated component code to only display the return statement for showcase
+  const extractJSX = (code: string | null) => {
     if (code) {
       const match = code.match(/return\s*\(\s*([\s\S]*?)\s*\);?/);
       if (match) {
-        return match[1]?.trim() || "";
+        const jsx = match[1]?.trim() || "";
+        console.log("Extracted JSX:", jsx); // debugging checking extracted JSX
+        return jsx;
       }
-      return "";
     }
     return "";
   };
@@ -132,8 +135,9 @@ function AiComponentMaker({}: Props) {
               className="rounded-lg bg-white p-4 shadow-lg"
               style={{ minHeight: "300px" }}
             >
+              {" "}
               <JsxParser
-                jsx={cleanComponentCode(componentCode) || ""}
+                jsx={extractJSX(componentCode) || ""}
                 components={{}}
                 renderError={(error) => (
                   <div className="text-red-500">
@@ -141,7 +145,6 @@ function AiComponentMaker({}: Props) {
                   </div>
                 )}
               />
-              <div>{componentCode}</div>
             </div>
           </div>
 
@@ -162,9 +165,9 @@ function AiComponentMaker({}: Props) {
 
           {showCode && (
             <>
-              <div className="my-4 rounded-lg bg-white p-4 shadow-lg">
+              <div className="my-4 rounded-lg p-4 shadow-lg">
                 <CodeMirror
-                  value={componentCode}
+                  value={componentCode || ""}
                   options={{
                     mode: "javascript",
                     theme: "material",
