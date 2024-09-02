@@ -36,6 +36,10 @@ function Demo({}: Props) {
       >
         All of these were created with Reactify.AI
       </motion.h1>
+      <p>
+        Click on an image to view the demo. You can also click the close button
+        to go back to the grid
+      </p>
 
       {selectedImage ? (
         <div className="flex flex-col items-center">
