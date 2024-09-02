@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { set } from "zod";
 
 type Props = {};
 
@@ -11,13 +10,22 @@ const LandingPage: React.FC<Props> = () => {
       {/* Left Section */}
       <div className="lg:w-1/2">
         <motion.h1
-          className="mb-6 text-5xl font-bold text-[#6B7280]"
+          className="mb-6 text-6xl font-black leading-none text-[#6B7280]"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           whileHover={{ color: "#00B8D9", transition: { duration: 0.3 } }}
         >
-          Design React Components with Reactify.AI{" "}
+          Design React Components with{" "}
+          <span
+            className="inline-block bg-neutral text-[#00A5C4]"
+            style={{
+              transform: "skewX(-10deg)",
+              padding: "0 10px",
+            }}
+          >
+            Reactify.AI
+          </span>{" "}
           <motion.span
             className="inline-block"
             whileHover={{
@@ -67,7 +75,7 @@ const LandingPage: React.FC<Props> = () => {
           whileTap={{ scale: 0.95, rotate: -2 }}
         />
       </div>
-      {/* Blue Line */}
+
       <motion.div
         className="absolute bottom-0 left-0 h-2 bg-[#00B8D9]"
         style={{ width: "100%" }}

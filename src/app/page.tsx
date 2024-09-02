@@ -7,9 +7,12 @@ import LandingPage from "./_components/LandingPage";
 import AiComponentMaker from "./_components/AiComponentMaker";
 import Navbar from "./_components/Navbar";
 import About from "./_components/About";
-import Demo from "./_components/Demo";
+
 import Payment from "./_components/Payment";
-import Dashboard from "./_components/Dashboard";
+
+import Demo1 from "./_components/Demo1";
+import Footer from "./_components/Footer";
+import NewOne from "./_components/NewOne";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -27,17 +30,23 @@ export default async function Home() {
       <section className="flex min-h-screen items-center justify-center">
         <AiComponentMaker />
       </section>
-      <section className="flex min-h-screen items-center justify-center">
+      <section
+        id="about"
+        className="flex min-h-screen items-center justify-center"
+      >
         <About />
       </section>
       <section className="flex min-h-screen items-center justify-center">
-        <Demo />
+        <Demo1 />
       </section>
-      <section className="flex min-h-screen items-center justify-center">
+      <section
+        id="pricing"
+        className="flex min-h-screen items-center justify-center"
+      >
         <Payment />
       </section>
       <section>
-        <Dashboard />
+        <Footer />
       </section>
     </main>
   );
