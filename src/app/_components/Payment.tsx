@@ -7,8 +7,10 @@ type Props = {};
 
 function Payment({}: Props) {
   return (
-    <div className="relative min-h-screen bg-[#f5f7f9] px-6 py-10 text-center">
-      <h1 className="mb-6 text-4xl font-bold text-[#6B7280]">Pay-As-You-Go!</h1>
+    <div className="relative min-h-screen px-6 py-10 text-center">
+      <h1 className="mb-6 text-4xl font-bold text-[#00B8D9]">
+        Pay-As-You-Go! 🚀
+      </h1>
       <p className="mb-8 text-lg text-[#6B7280]">
         Purchase credits and use them to generate React components.
       </p>
@@ -18,17 +20,17 @@ function Payment({}: Props) {
 
       <div className="flex flex-col justify-center gap-8 md:flex-row">
         <motion.div
-          className="flex flex-col rounded-lg bg-gradient-to-br from-[#00B8D9] to-[#00A5C4] p-6 text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
+          className="flex flex-col rounded-lg bg-gray-800 p-6 text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
           whileHover={{
             scale: 1.05,
-            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
+            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)",
           }}
         >
           <h2 className="mb-4 text-3xl font-bold">10 Credits</h2>
           <p className="mb-4 text-2xl">€5</p>
           <div className="mb-4 text-left">
             <p className="mb-2 flex items-center">
-              <FaCheckCircle className="mr-2 text-green-400" /> 10 API Calls
+              <FaCheckCircle className="mr-2 text-green-400" /> 10 Components
             </p>
             <p className="mb-2 flex items-center">
               <FaCheckCircle className="mr-2 text-green-400" /> Lifetime Credits
@@ -37,7 +39,7 @@ function Payment({}: Props) {
               <FaCheckCircle className="mr-2 text-green-400" /> No Expiration
             </p>
           </div>
-          <button className="rounded-lg bg-white px-4 py-2 text-[#00B8D9] transition duration-300 hover:bg-[#f0f0f0]">
+          <button className="rounded-lg bg-[#00B8D9] px-4 py-2 text-white transition duration-300 hover:bg-[#00A5C4]">
             <a href="#" className="no-underline">
               Buy Now 🚀
             </a>
@@ -45,17 +47,17 @@ function Payment({}: Props) {
         </motion.div>
 
         <motion.div
-          className="flex flex-col rounded-lg bg-gradient-to-br from-[#00B8D9] to-[#00A5C4] p-6 text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
+          className="flex flex-col rounded-lg bg-gray-800 p-6 text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
           whileHover={{
             scale: 1.05,
-            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
+            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)",
           }}
         >
           <h2 className="mb-4 text-3xl font-bold">50 Credits</h2>
           <p className="mb-4 text-2xl">€20</p>
           <div className="mb-4 text-left">
             <p className="mb-2 flex items-center">
-              <FaCheckCircle className="mr-2 text-green-400" /> 50 API Calls
+              <FaCheckCircle className="mr-2 text-green-400" /> 50 Components
             </p>
             <p className="mb-2 flex items-center">
               <FaCheckCircle className="mr-2 text-green-400" /> Lifetime Credits
@@ -64,7 +66,7 @@ function Payment({}: Props) {
               <FaCheckCircle className="mr-2 text-green-400" /> No Expiration
             </p>
           </div>
-          <button className="rounded-lg bg-white px-4 py-2 text-[#00B8D9] transition duration-300 hover:bg-[#f0f0f0]">
+          <button className="rounded-lg bg-[#00B8D9] px-4 py-2 text-white transition duration-300 hover:bg-[#00A5C4]">
             <a href="#" className="no-underline">
               Buy Now 🚀
             </a>
@@ -72,11 +74,10 @@ function Payment({}: Props) {
         </motion.div>
 
         <motion.div
-          className="flex flex-col rounded-lg bg-gradient-to-br from-[#00B8D9] to-[#00A5C4] p-6 text-white shadow-lg transition-transform hover:shadow-xl"
+          className="flex flex-col rounded-lg bg-gray-800 p-6 text-white shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
           whileHover={{
-            skewY: 10,
             scale: 1.05,
-            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
+            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)",
           }}
         >
           <h2 className="mb-4 text-3xl font-bold">
@@ -101,7 +102,7 @@ function Payment({}: Props) {
           <p className="mb-4 text-2xl">€35</p>
           <div className="mb-4 text-left">
             <p className="mb-2 flex items-center">
-              <FaCheckCircle className="mr-2 text-green-400" /> 100 API Calls
+              <FaCheckCircle className="mr-2 text-green-400" /> 100 Components
             </p>
             <p className="mb-2 flex items-center">
               <FaCheckCircle className="mr-2 text-green-400" /> Lifetime Credits
@@ -110,7 +111,7 @@ function Payment({}: Props) {
               <FaCheckCircle className="mr-2 text-green-400" /> No Expiration
             </p>
           </div>
-          <button className="rounded-lg bg-white px-4 py-2 text-[#00B8D9] transition duration-300 hover:bg-[#f0f0f0]">
+          <button className="rounded-lg bg-[#00B8D9] px-4 py-2 text-white transition duration-300 hover:bg-[#00A5C4]">
             <a href="#" className="no-underline">
               Buy Now 🚀
             </a>

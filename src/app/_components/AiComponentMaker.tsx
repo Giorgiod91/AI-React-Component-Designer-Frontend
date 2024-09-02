@@ -9,8 +9,8 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
-import JsxParser from "react-jsx-parser";
 import { Controlled as CodeMirror } from "react-codemirror2";
+import JsxParser from "react-jsx-parser";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/javascript/javascript";
@@ -43,7 +43,6 @@ function AiComponentMaker({}: Props) {
       }
 
       const data = await response.json();
-      console.log("Received Component Code:", data.component_code); // Log the received code
       if (data.component_code) {
         setComponentCode(data.component_code);
       } else {
@@ -64,21 +63,21 @@ function AiComponentMaker({}: Props) {
     }
   };
 
-  // Function to clean up the component code
   const cleanComponentCode = (code: string | null) => {
     if (code) {
-      // Remove Markdown code block delimiters
-      const cleanedCode = code.replace(/```jsx|```/g, "").trim();
-      console.log("Cleaned Component Code:", cleanedCode); // Log the cleaned code
-      return cleanedCode;
+      const match = code.match(/return\s*\(\s*([\s\S]*?)\s*\);?/);
+      if (match) {
+        return match[1]?.trim() || "";
+      }
+      return "";
     }
-    return null;
+    return "";
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#e3e8e9] to-[#ffffff] px-6 py-10 text-center">
+    <div className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100 px-6 py-10 text-center">
       <motion.h1
-        className="mb-8 flex items-center justify-center space-x-2 text-5xl font-bold text-[#4696bc]"
+        className="mb-8 flex items-center justify-center space-x-2 text-5xl font-bold text-[#00B8D9]"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -90,7 +89,7 @@ function AiComponentMaker({}: Props) {
 
       <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg transform space-y-8 rounded-lg bg-white p-8 shadow-xl ring-1 ring-[#c2a6b8] transition-transform hover:scale-105"
+        className="w-full max-w-lg transform space-y-8 rounded-lg bg-white p-8 shadow-lg ring-1 ring-[#00B8D9] transition-transform hover:scale-105"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -100,12 +99,12 @@ function AiComponentMaker({}: Props) {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Describe the component you want to generate"
-          className="w-full rounded-lg border border-[#c2a6b8] bg-[#f9f9f9] p-4 text-[#6b5b6d] shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-[#4696bc]"
+          className="w-full rounded-lg border border-[#00B8D9] bg-gray-200 p-4 text-gray-800 shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-[#00B8D9]"
         />
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-[#4696bc] p-3 text-white opacity-90 transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
+          className="w-full rounded-lg bg-[#00B8D9] p-3 text-white opacity-90 transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
         >
           {loading ? "Generating..." : "Generate Component"}
         </button>
@@ -113,7 +112,7 @@ function AiComponentMaker({}: Props) {
 
       {loading && (
         <motion.div
-          className="mt-6 text-[#4696bc]"
+          className="mt-6 text-[#00B8D9]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -126,7 +125,7 @@ function AiComponentMaker({}: Props) {
       {componentCode && (
         <div className="mt-8 w-full max-w-lg">
           <div className="mb-4">
-            <h3 className="mb-2 text-xl font-semibold text-[#4696bc]">
+            <h3 className="mb-2 text-xl font-semibold text-[#00B8D9]">
               Component Preview
             </h3>
             <div
@@ -134,7 +133,7 @@ function AiComponentMaker({}: Props) {
               style={{ minHeight: "300px" }}
             >
               <JsxParser
-                jsx={cleanComponentCode(componentCode)}
+                jsx={cleanComponentCode(componentCode) || ""}
                 components={{}}
                 renderError={(error) => (
                   <div className="text-red-500">
@@ -142,12 +141,13 @@ function AiComponentMaker({}: Props) {
                   </div>
                 )}
               />
+              <div>{componentCode}</div>
             </div>
           </div>
 
           <motion.button
             onClick={() => setShowCode(!showCode)}
-            className="mt-6 flex items-center rounded-lg bg-[#4696bc] p-3 text-white transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
+            className="mt-6 flex items-center rounded-lg bg-[#00B8D9] p-3 text-white transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             whileHover={{ scale: 1.05 }}
@@ -177,7 +177,7 @@ function AiComponentMaker({}: Props) {
 
               <motion.button
                 onClick={CopyToClipBoard}
-                className="mt-6 flex items-center rounded-lg bg-[#4696bc] p-3 text-white transition duration-300 ease-in-out hover:bg-[#357aab] focus:outline-none focus:ring-4 focus:ring-[#357aab]/50"
+                className="mt-6 flex items-center rounded-lg bg-[#00B8D9] p-3 text-white transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
