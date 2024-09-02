@@ -3,7 +3,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 type Props = {};
-//::TODO:: Add function if clicked on image, it will show the code snippet
 
 const images = [
   "/demo1.png",
@@ -15,15 +14,18 @@ const images = [
   "path-to-image7.jpg",
   "path-to-image8.jpg",
 ];
-const showSelectedImage = (src: string) => {
-  return (
-    <div className="flex h-[450px] w-[450px] border">
-      <img src={src} alt="Demo" className="object-contain" />
-    </div>
-  );
-};
+
 function Demo({}: Props) {
-  const [noImageClicked, setNoImageClicked] = React.useState(true);
+  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+
+  const handleImageClick = (src: string) => {
+    setSelectedImage(src);
+  };
+
+  const handleCloseClick = () => {
+    setSelectedImage(null);
+  };
+
   return (
     <div className="max-w-7xl bg-[#f5f7f9] p-6">
       <motion.h1
@@ -34,20 +36,38 @@ function Demo({}: Props) {
       >
         All of these were created with Reactify.AI
       </motion.h1>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {images.map((src, index) =>
-          noImageClicked ? (
-            <ImageGridItem key={index} src={src} />
-          ) : (
-            showSelectedImage(src)
-          ),
-        )}
-      </div>
+
+      {selectedImage ? (
+        <div className="flex flex-col items-center">
+          <div className="relative">
+            <img
+              src={selectedImage}
+              alt="Selected Demo"
+              className="border border-[#c2a6b8] object-cover shadow-lg"
+            />
+            <button
+              onClick={handleCloseClick}
+              className="absolute right-1/2 rounded-full bg-black p-2 text-white"
+            >
+              ✕ Close
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {images.map((src, index) => (
+            <ImageGridItem key={index} src={src} onClick={handleImageClick} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-const ImageGridItem: React.FC<{ src: string }> = ({ src }) => {
+const ImageGridItem: React.FC<{
+  src: string;
+  onClick: (src: string) => void;
+}> = ({ src, onClick }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -56,9 +76,10 @@ const ImageGridItem: React.FC<{ src: string }> = ({ src }) => {
       className="overflow-hidden rounded-lg border border-[#c2a6b8] bg-white shadow-lg"
     >
       <motion.img
+        onClick={() => onClick(src)}
         src={src}
         alt="Demo"
-        className="h-64 w-full object-contain transition-transform duration-300 ease-in-out hover:scale-105"
+        className="h-64 w-full cursor-pointer object-contain transition-transform duration-300 ease-in-out hover:scale-105"
       />
     </motion.div>
   );
