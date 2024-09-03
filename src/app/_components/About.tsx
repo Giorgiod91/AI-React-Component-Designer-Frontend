@@ -44,8 +44,8 @@ function About() {
         >
           <FaPalette className="mb-4 text-5xl text-[#00B8D9]" />{" "}
           <motion.p className="text-xl text-[#6B7280] transition-opacity duration-1000 ease-in-out hover:opacity-80">
-            It's a simple yet powerful tool that allows you to create, preview,
-            and customize your React components effortlessly. 🎨
+            It&apos;s a simple yet powerful tool that allows you to create,
+            preview, and customize your React components effortlessly. 🎨
           </motion.p>
         </motion.div>
 
