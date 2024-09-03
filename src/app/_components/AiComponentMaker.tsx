@@ -11,10 +11,15 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import { Controlled as CodeMirror } from "react-codemirror2";
-import JsxParser from "react-jsx-parser";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/javascript/javascript";
+
+import Fadeloader from "react-spinners/ClipLoader";
+
+interface ResponseData {
+  component_code?: string;
+}
 
 function AiComponentMaker() {
   const [componentCode, setComponentCode] = useState<string | null>(null);
@@ -29,7 +34,7 @@ function AiComponentMaker() {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/component", {
+      const response = await fetch("/api/proxy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +46,7 @@ function AiComponentMaker() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data: ResponseData = await response.json();
       if (data.component_code) {
         setComponentCode(data.component_code);
         console.log("Fetched component code:", data.component_code);
@@ -63,29 +68,6 @@ function AiComponentMaker() {
     }
   };
 
-  const createDynamicComponent = (code: string) => {
-    try {
-      return (
-        <JsxParser
-          components={{}}
-          jsx={code}
-          renderInWrapper={false}
-          onError={(e) => {
-            console.error("Error rendering component code:", e);
-            setError(
-              "Error rendering component code. Check the console for details.",
-            );
-          }}
-        />
-      );
-    } catch (e) {
-      console.error("Error creating dynamic component:", e);
-      setError(
-        "Error creating dynamic component. Check the console for details.",
-      );
-    }
-  };
-
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100 px-6 py-10 text-center">
       <motion.h1
@@ -98,6 +80,7 @@ function AiComponentMaker() {
         <span>AI Component Maker</span>
         <FaRocket className="text-6xl" />
       </motion.h1>
+      <p>Create the component with a prompt, wait, then click on copy</p>
 
       <motion.form
         onSubmit={handleSubmit}
@@ -129,14 +112,23 @@ function AiComponentMaker() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <FaRegQuestionCircle className="mr-2 inline-block" />
-          Loading...
+          <Fadeloader color="#00B8D9" loading={loading} size={50} />
         </motion.div>
       )}
 
       {componentCode && (
         <div className="mt-8 w-full max-w-4xl">
-          <div className="mb-4"></div>
+          <div className="mb-4">
+            <h3 className="mb-2 text-xl font-semibold text-[#00B8D9]">
+              Component Preview
+            </h3>
+            <div
+              className="rounded-lg bg-white p-4 shadow-lg"
+              style={{ minHeight: "300px" }}
+            >
+              New Feature Coming soon
+            </div>
+          </div>
 
           <motion.button
             onClick={() => setShowCode(!showCode)}

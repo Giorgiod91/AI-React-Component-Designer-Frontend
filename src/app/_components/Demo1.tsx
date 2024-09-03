@@ -3,9 +3,11 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const imageDetails = [
-  { src: "/demo1.png", label: "Button" },
+  { src: "/landingPage.png", label: "LandingPage" },
+
   { src: "/dashboard.png", label: "Dashboard with charts" },
   { src: "/form.png", label: "Form" },
+  { src: "/demo1.png", label: "Button" },
 ];
 
 const Demo1 = () => {
