@@ -1,15 +1,16 @@
 "use client";
 
 import React from "react";
-import { FaTwitter } from "react-icons/fa";
+import { FaGithub, FaTwitter } from "react-icons/fa";
 import { TfiYoutube } from "react-icons/tfi";
 
 const footerItemsOne = [
-  { label: <FaTwitter className="text-2xl" />, src: "https://x.com" },
+  { label: <FaTwitter className="text-2xl" />, src: "https://x.com/Foquss2" },
   { label: <TfiYoutube className="text-2xl" />, src: "https://youtube.com" },
-  { label: "dddd", src: "#" },
-  { label: "ddd", src: "#" },
-  { label: "ddd", src: "#" },
+  {
+    label: <FaGithub className="text-2xl" />,
+    src: "https://github.com/Giorgiod91",
+  },
 ];
 
 const footerItemsTwo = [

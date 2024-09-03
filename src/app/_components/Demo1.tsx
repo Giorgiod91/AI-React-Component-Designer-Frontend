@@ -6,7 +6,6 @@ const imageDetails = [
   { src: "/demo1.png", label: "Button" },
   { src: "/dashboard.png", label: "Dashboard with charts" },
   { src: "/form.png", label: "Form" },
-  // Add additional images as needed
 ];
 
 const Demo1 = () => {
