@@ -1,4 +1,4 @@
-# AI React Component Designer - Frontend
+# AI Component Generator
 
 Welcome to the **AI React Component Designer** frontend repository! This project is a web application that allows users to design React components such as buttons, forms, and other UI elements. You can preview, style, and adjust your components in real-time. The frontend connects to a Flask-based Python backend, which handles API calls to the OpenAI API for AI-driven component generation.
 
@@ -22,6 +22,12 @@ Welcome to the **AI React Component Designer** frontend repository! This project
 
 
 ![image](https://github.com/user-attachments/assets/efdc22c3-7736-4f24-a9aa-5e44a1373693)
+
+
+
+
+https://github.com/user-attachments/assets/04b89a75-f8c4-42d5-8ab2-9a2680cac3a4
+
 
 
 
