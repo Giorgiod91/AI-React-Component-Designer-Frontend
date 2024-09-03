@@ -3,9 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 
-type Props = {};
-
-function Payment({}: Props) {
+function Payment() {
   return (
     <div className="relative min-h-screen px-6 py-10 text-center">
       <h1 className="mb-6 text-4xl font-bold text-[#00B8D9]">

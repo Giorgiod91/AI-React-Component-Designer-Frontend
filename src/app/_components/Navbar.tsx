@@ -1,9 +1,7 @@
 import React from "react";
 import { FaCrown, FaInfoCircle } from "react-icons/fa";
 
-type Props = {};
-
-const Navbar: React.FC<Props> = () => {
+const Navbar = () => {
   return (
     <nav className="navbar mx-auto max-w-7xl bg-black text-white shadow-lg">
       <div className="flex-1">
@@ -14,7 +12,10 @@ const Navbar: React.FC<Props> = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal space-x-6 px-1">
           <li>
-            <a className="flex items-center transition duration-300 hover:text-[#00B8D9]">
+            <a
+              href="#pricing"
+              className="flex items-center transition duration-300 hover:text-[#00B8D9]"
+            >
               <FaCrown className="mr-1" /> Premium
             </a>
           </li>
@@ -25,13 +26,19 @@ const Navbar: React.FC<Props> = () => {
               </summary>
               <ul className="absolute right-0 mt-2 w-40 rounded-lg bg-[#1F2937] p-2 opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
                 <li>
-                  <a className="block rounded-md px-4 py-2 transition duration-300 hover:bg-[#00B8D9] hover:text-white">
+                  <a
+                    href="#demo"
+                    className="block rounded-md px-4 py-2 transition duration-300 hover:bg-[#00B8D9] hover:text-white"
+                  >
                     Demo
                   </a>
                 </li>
                 <li>
-                  <a className="block rounded-md px-4 py-2 transition duration-300 hover:bg-[#00B8D9] hover:text-white">
-                    Showcase
+                  <a
+                    href="#about"
+                    className="block rounded-md px-4 py-2 transition duration-300 hover:bg-[#00B8D9] hover:text-white"
+                  >
+                    About
                   </a>
                 </li>
               </ul>

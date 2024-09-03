@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -15,9 +16,7 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material.css";
 import "codemirror/mode/javascript/javascript";
 
-type Props = {};
-
-function AiComponentMaker({}: Props) {
+function AiComponentMaker() {
   const [componentCode, setComponentCode] = useState<string | null>(null);
   const [prompt, setPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,17 +63,27 @@ function AiComponentMaker({}: Props) {
     }
   };
 
-  //i want to extract the jsx from the generated component code to only display the return statement for showcase
-  const extractJSX = (code: string | null) => {
-    if (code) {
-      const match = code.match(/return\s*\(\s*([\s\S]*?)\s*\);?/);
-      if (match) {
-        const jsx = match[1]?.trim() || "";
-        console.log("Extracted JSX:", jsx); // debugging checking extracted JSX
-        return jsx;
-      }
+  const createDynamicComponent = (code: string) => {
+    try {
+      return (
+        <JsxParser
+          components={{}}
+          jsx={code}
+          renderInWrapper={false}
+          onError={(e) => {
+            console.error("Error rendering component code:", e);
+            setError(
+              "Error rendering component code. Check the console for details.",
+            );
+          }}
+        />
+      );
+    } catch (e) {
+      console.error("Error creating dynamic component:", e);
+      setError(
+        "Error creating dynamic component. Check the console for details.",
+      );
     }
-    return "";
   };
 
   return (
@@ -126,27 +135,8 @@ function AiComponentMaker({}: Props) {
       )}
 
       {componentCode && (
-        <div className="mt-8 w-full max-w-lg">
-          <div className="mb-4">
-            <h3 className="mb-2 text-xl font-semibold text-[#00B8D9]">
-              Component Preview
-            </h3>
-            <div
-              className="rounded-lg bg-white p-4 shadow-lg"
-              style={{ minHeight: "300px" }}
-            >
-              {" "}
-              <JsxParser
-                jsx={extractJSX(componentCode) || ""}
-                components={{}}
-                renderError={(error) => (
-                  <div className="text-red-500">
-                    Error rendering component: {error.message}
-                  </div>
-                )}
-              />
-            </div>
-          </div>
+        <div className="mt-8 w-full max-w-4xl">
+          <div className="mb-4"></div>
 
           <motion.button
             onClick={() => setShowCode(!showCode)}
@@ -164,20 +154,24 @@ function AiComponentMaker({}: Props) {
           </motion.button>
 
           {showCode && (
-            <>
-              <div className="my-4 rounded-lg p-4 shadow-lg">
-                <CodeMirror
-                  value={componentCode || ""}
-                  options={{
-                    mode: "javascript",
-                    theme: "material",
-                    lineNumbers: true,
-                    readOnly: true,
-                  }}
-                  onBeforeChange={() => {}}
-                />
+            <div className="mx-auto my-4 w-full max-w-4xl">
+              <div className="rounded-lg bg-white p-4 shadow-lg">
+                <div
+                  className="code-mirror-container"
+                  style={{ height: "300px", overflow: "auto" }}
+                >
+                  <CodeMirror
+                    value={componentCode || ""}
+                    options={{
+                      mode: "javascript",
+                      theme: "material",
+                      lineNumbers: true,
+                      readOnly: true,
+                    }}
+                    onBeforeChange={() => {}}
+                  />
+                </div>
               </div>
-
               <motion.button
                 onClick={CopyToClipBoard}
                 className="mt-6 flex items-center rounded-lg bg-[#00B8D9] p-3 text-white transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
@@ -188,7 +182,7 @@ function AiComponentMaker({}: Props) {
                 <FaCopy className="mr-2" />
                 Copy
               </motion.button>
-            </>
+            </div>
           )}
         </div>
       )}

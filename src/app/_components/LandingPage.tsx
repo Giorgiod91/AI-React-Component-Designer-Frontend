@@ -2,9 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-type Props = {};
-
-const LandingPage: React.FC<Props> = () => {
+const LandingPage = () => {
   return (
     <section className="relative mx-auto flex max-w-7xl flex-col justify-between gap-16 overflow-x-hidden px-6 pb-10 pt-8 sm:px-8 sm:pt-12 lg:flex-row lg:gap-20 lg:pb-20">
       {/* Left Section */}

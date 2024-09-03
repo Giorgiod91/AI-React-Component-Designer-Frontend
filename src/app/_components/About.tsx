@@ -3,9 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaClock, FaPalette, FaRocket } from "react-icons/fa";
 
-type Props = {};
-
-function About({}: Props) {
+function About() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f7f9] px-6 py-10 text-center">
       <motion.h1
