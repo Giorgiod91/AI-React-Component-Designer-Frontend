@@ -8,13 +8,13 @@ const LandingPage = () => {
       {/* Left Section */}
       <div className="lg:w-1/2">
         <motion.h1
-          className="mb-6 text-6xl font-black leading-none text-[#6B7280]"
+          className="mb-6 text-5xl font-black leading-snug text-[#6B7280] sm:text-6xl"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           whileHover={{ color: "#00B8D9", transition: { duration: 0.3 } }}
         >
-          Design React Components with{" "}
+          Build Apps Fast with{" "}
           <span
             className="inline-block bg-neutral text-[#00A5C4]"
             style={{
@@ -37,7 +37,7 @@ const LandingPage = () => {
               ease: "easeInOut",
             }}
           >
-            😮
+            🚀
           </motion.span>
         </motion.h1>
 
@@ -47,8 +47,9 @@ const LandingPage = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
         >
-          Create, preview, and customize your React components effortlessly with
-          our AI-powered tool. 🛠️
+          Transform your ideas into fully functional React apps faster than
+          ever. <strong>Reactify.AI</strong> lets you build, preview, and
+          customize components in minutes—all by simply providing prompts. ⏱️
         </motion.p>
         <motion.a
           href="#get-started"

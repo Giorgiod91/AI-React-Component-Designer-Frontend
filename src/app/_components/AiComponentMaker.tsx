@@ -47,7 +47,7 @@ function AiComponentMaker() {
       }
 
       const data: ResponseData = await response.json();
-      if (data.component_code) {
+      if (typeof data.component_code === "string") {
         setComponentCode(data.component_code);
         console.log("Fetched component code:", data.component_code);
       } else {
@@ -62,7 +62,7 @@ function AiComponentMaker() {
 
   const CopyToClipBoard = () => {
     if (componentCode) {
-      navigator.clipboard.writeText(componentCode);
+      void navigator.clipboard.writeText(componentCode);
     } else {
       alert("No component to copy");
     }
@@ -160,7 +160,10 @@ function AiComponentMaker() {
                       lineNumbers: true,
                       readOnly: true,
                     }}
-                    onBeforeChange={() => {}}
+                    // @ts-ignore
+                    onBeforeChange={() => {
+                      console.log("onBeforeChange");
+                    }}
                   />
                 </div>
               </div>

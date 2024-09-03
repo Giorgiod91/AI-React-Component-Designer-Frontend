@@ -17,7 +17,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = await request.json();
+    // Use type assertion to specify that the body conforms to ApiResponse
+    const body = (await request.json()) as ApiResponse;
     console.log("Request body:", body);
 
     const response = await fetch(API_URL, {
