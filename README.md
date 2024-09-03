@@ -7,12 +7,17 @@ Welcome to the **AI React Component Designer** frontend repository! This project
 ![image](https://github.com/user-attachments/assets/5e4099e2-63c7-4ccd-91be-72cc74bece71)
 
 
+![image](https://github.com/user-attachments/assets/b32e72b0-ac3a-4e27-98ed-a5c9308fe582)
+
+
+
 
 ![image](https://github.com/user-attachments/assets/cb5ac8cb-e22f-4f8c-8c21-9f979799ee03)
 
 
 
-![image](https://github.com/user-attachments/assets/4943879b-9c76-4b58-8e6d-63652cae30a8)
+![image](https://github.com/user-attachments/assets/d2ed29c4-8d8f-4c8e-b07a-f272154223a4)
+
 
 
 
