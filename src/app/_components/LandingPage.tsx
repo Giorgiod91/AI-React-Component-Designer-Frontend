@@ -67,7 +67,8 @@ const LandingPage = () => {
           src="/landingPage.jpg"
           alt="App preview"
           className="w-full rounded-lg shadow-lg"
-          initial={{ scale: 0.8, opacity: 0 }}
+          initial={{ scale: 0.8, opacity: 0, x: 300 }}
+          whileInView={{ scale: 1, opacity: 1, x: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
           whileHover={{ scale: 1.05, rotate: 2 }}
