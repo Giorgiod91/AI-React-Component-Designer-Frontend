@@ -2,20 +2,9 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FaRocket,
-  FaRobot,
-  FaRegQuestionCircle,
-  FaCopy,
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
-import { Controlled as CodeMirror } from "react-codemirror2";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material.css";
-import "codemirror/mode/javascript/javascript";
-
+import { FaRocket, FaRobot, FaEye, FaEyeSlash, FaCopy } from "react-icons/fa";
 import Fadeloader from "react-spinners/ClipLoader";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 interface ResponseData {
   component_code?: string;
@@ -27,6 +16,15 @@ function AiComponentMaker() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [showCode, setShowCode] = useState<boolean>(false);
+
+  function isResponseData(data: unknown): data is ResponseData {
+    return (
+      typeof data === "object" &&
+      data !== null &&
+      "component_code" in data &&
+      typeof (data as ResponseData).component_code === "string"
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,9 +44,10 @@ function AiComponentMaker() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const data: ResponseData = await response.json();
-      if (typeof data.component_code === "string") {
-        setComponentCode(data.component_code);
+      const data: unknown = await response.json();
+
+      if (isResponseData(data)) {
+        setComponentCode(data.component_code ?? null);
         console.log("Fetched component code:", data.component_code);
       } else {
         throw new Error("Unexpected response structure");
@@ -57,14 +56,6 @@ function AiComponentMaker() {
       setError(`Failed to generate component: ${(err as Error).message}`);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const CopyToClipBoard = () => {
-    if (componentCode) {
-      void navigator.clipboard.writeText(componentCode);
-    } else {
-      alert("No component to copy");
     }
   };
 
@@ -147,36 +138,20 @@ function AiComponentMaker() {
 
           {showCode && (
             <div className="mx-auto my-4 w-full max-w-4xl">
-              <div className="rounded-lg bg-white p-4 shadow-lg">
-                <div
-                  className="code-mirror-container"
-                  style={{ height: "300px", overflow: "auto" }}
+              <pre className="whitespace-pre-wrap rounded-lg bg-gray-800 p-4 text-white">
+                <code>{componentCode}</code>
+              </pre>
+              <CopyToClipboard text={componentCode ?? ""}>
+                <motion.button
+                  className="mt-6 flex items-center rounded-lg bg-[#00B8D9] p-3 text-white transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
+                  initial={{ scale: 0.95 }}
+                  animate={{ scale: 1 }}
+                  whileHover={{ scale: 1.05 }}
                 >
-                  <CodeMirror
-                    value={componentCode || ""}
-                    options={{
-                      mode: "javascript",
-                      theme: "material",
-                      lineNumbers: true,
-                      readOnly: true,
-                    }}
-                    // @ts-ignore
-                    onBeforeChange={() => {
-                      console.log("onBeforeChange");
-                    }}
-                  />
-                </div>
-              </div>
-              <motion.button
-                onClick={CopyToClipBoard}
-                className="mt-6 flex items-center rounded-lg bg-[#00B8D9] p-3 text-white transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
-                initial={{ scale: 0.95 }}
-                animate={{ scale: 1 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <FaCopy className="mr-2" />
-                Copy
-              </motion.button>
+                  <FaCopy className="mr-2" />
+                  Copy
+                </motion.button>
+              </CopyToClipboard>
             </div>
           )}
         </div>
