@@ -1,52 +1,76 @@
-import React from "react";
-import { FaCrown, FaInfoCircle } from "react-icons/fa";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { FaGithub } from "react-icons/fa";
+
+const navLinks = [
+  { label: "Features", href: "#features" },
+  { label: "Demo", href: "#demo" },
+  { label: "Pricing", href: "#pricing" },
+];
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
   return (
-    <nav className="navbar mx-auto max-w-7xl bg-black text-white shadow-lg">
-      <div className="flex-1">
-        <a className="btn btn-ghost text-2xl font-bold text-white transition duration-300 hover:text-[#00B8D9]">
-          Reactify.AI
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[#09090B]/90 backdrop-blur-xl border-b border-white/8 shadow-2xl"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <a href="#hero" className="flex items-center gap-2 group">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#00D4FF] to-[#6366F1]">
+            <span className="text-xs font-black text-white">R</span>
+          </div>
+          <span className="text-lg font-bold tracking-tight text-white">
+            Reactify<span className="text-[#00D4FF]">.AI</span>
+          </span>
         </a>
-      </div>
-      <div className="flex-none">
-        <ul className="menu menu-horizontal space-x-6 px-1">
-          <li>
+
+        <div className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => (
             <a
-              href="#pricing"
-              className="flex items-center transition duration-300 hover:text-[#00B8D9]"
+              key={link.label}
+              href={link.href}
+              className="text-sm text-zinc-400 transition-colors hover:text-white"
             >
-              <FaCrown className="mr-1" /> Premium
+              {link.label}
             </a>
-          </li>
-          <li>
-            <details className="group relative">
-              <summary className="flex cursor-pointer items-center transition duration-300 hover:text-[#00B8D9]">
-                <FaInfoCircle className="mr-1" /> Info
-              </summary>
-              <ul className="absolute right-0 mt-2 w-40 rounded-lg bg-[#1F2937] p-2 opacity-0 shadow-lg transition-opacity duration-300 group-hover:opacity-100">
-                <li>
-                  <a
-                    href="#demo"
-                    className="block rounded-md px-4 py-2 transition duration-300 hover:bg-[#00B8D9] hover:text-white"
-                  >
-                    Demo
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#about"
-                    className="block rounded-md px-4 py-2 transition duration-300 hover:bg-[#00B8D9] hover:text-white"
-                  >
-                    About
-                  </a>
-                </li>
-              </ul>
-            </details>
-          </li>
-        </ul>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-4">
+          <a
+            href="https://github.com/Giorgiod91"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-400 transition-colors hover:text-white"
+            aria-label="GitHub"
+          >
+            <FaGithub className="text-xl" />
+          </a>
+          <a
+            href="#get-started"
+            className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-zinc-100 active:scale-95"
+          >
+            Try Free
+          </a>
+        </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

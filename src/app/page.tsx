@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { getServerAuthSession } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
 import LandingPage from "./_components/LandingPage";
 import AiComponentMaker from "./_components/AiComponentMaker";
 import Navbar from "./_components/Navbar";
@@ -11,39 +8,24 @@ import Footer from "./_components/Footer";
 
 export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col scroll-smooth bg-[#F4F7FA]">
+    <main className="flex min-h-screen flex-col bg-[#09090B]">
       <Navbar />
-
-      <section className="flex min-h-screen items-center justify-center">
+      <section id="hero">
         <LandingPage />
       </section>
-      <section
-        id="get-started"
-        className="flex min-h-screen items-center justify-center"
-      >
-        <AiComponentMaker />
-      </section>
-      <section
-        id="about"
-        className="flex min-h-screen items-center justify-center"
-      >
+      <section id="features">
         <About />
       </section>
-      <section
-        id="demo"
-        className="flex min-h-screen items-center justify-center"
-      >
+      <section id="get-started">
+        <AiComponentMaker />
+      </section>
+      <section id="demo">
         <Demo1 />
       </section>
-      <section
-        id="pricing"
-        className="flex min-h-screen items-center justify-center"
-      >
+      <section id="pricing">
         <Payment />
       </section>
-      <section>
-        <Footer />
-      </section>
+      <Footer />
     </main>
   );
 }
