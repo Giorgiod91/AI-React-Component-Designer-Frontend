@@ -1,42 +1,49 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { FaRocket, FaRobot, FaEye, FaEyeSlash, FaCopy } from "react-icons/fa";
-import Fadeloader from "react-spinners/ClipLoader";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaArrowRight, FaCopy, FaCheck, FaCode } from "react-icons/fa";
+import ClipLoader from "react-spinners/ClipLoader";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 interface ResponseData {
   component_code?: string;
 }
 
+function isResponseData(data: unknown): data is ResponseData {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "component_code" in data &&
+    typeof (data as ResponseData).component_code === "string"
+  );
+}
+
+const examplePrompts = [
+  "A responsive navbar with logo and mobile menu",
+  "A dark mode pricing card with CTA button",
+  "An animated hero section with gradient background",
+  "A user profile card with avatar and social links",
+];
+
 function AiComponentMaker() {
   const [componentCode, setComponentCode] = useState<string | null>(null);
   const [prompt, setPrompt] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [showCode, setShowCode] = useState<boolean>(false);
-
-  function isResponseData(data: unknown): data is ResponseData {
-    return (
-      typeof data === "object" &&
-      data !== null &&
-      "component_code" in data &&
-      typeof (data as ResponseData).component_code === "string"
-    );
-  }
+  const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!prompt.trim()) return;
     setLoading(true);
     setError(null);
+    setComponentCode(null);
 
     try {
       const response = await fetch("/api/proxy", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
       });
 
@@ -48,126 +55,151 @@ function AiComponentMaker() {
 
       if (isResponseData(data)) {
         setComponentCode(data.component_code ?? null);
-        console.log("Fetched component code:", data.component_code);
       } else {
         throw new Error("Unexpected response structure");
       }
     } catch (err) {
-      setError(`Failed to generate component: ${(err as Error).message}`);
+      setError(`Failed to generate component. Please try again.`);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleCopy = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100 px-6 py-10 text-center">
-      <motion.h1
-        className="mb-8 flex items-center justify-center space-x-2 text-5xl font-bold text-[#00B8D9]"
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <FaRobot className="text-6xl" />
-        <span>AI Component Maker</span>
-        <FaRocket className="text-6xl" />
-      </motion.h1>
-      <p>Create the component with a prompt, wait, then click on copy</p>
-
-      <motion.form
-        onSubmit={handleSubmit}
-        className="w-full max-w-lg transform space-y-8 rounded-lg bg-white p-8 shadow-lg ring-1 ring-[#00B8D9] transition-transform hover:scale-105"
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <input
-          type="text"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Describe the component you want to generate"
-          className="w-full rounded-lg border border-[#00B8D9] bg-gray-200 p-4 text-gray-800 shadow-md transition duration-300 ease-in-out focus:ring-2 focus:ring-[#00B8D9]"
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-lg bg-[#00B8D9] p-3 text-white opacity-90 transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
-        >
-          {loading ? "Generating..." : "Generate Component"}
-        </button>
-      </motion.form>
-
-      {loading && (
+    <section className="bg-[#09090B] px-6 py-32">
+      <div className="mx-auto max-w-4xl">
         <motion.div
-          className="mt-6 text-[#00B8D9]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <Fadeloader color="#00B8D9" loading={loading} size={50} />
+          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-[#00D4FF]">
+            Live demo
+          </p>
+          <h2 className="mb-4 text-4xl font-black text-white sm:text-5xl">
+            Try it{" "}
+            <span className="bg-gradient-to-r from-[#00D4FF] to-[#6366F1] bg-clip-text text-transparent">
+              right now
+            </span>
+          </h2>
+          <p className="mx-auto max-w-xl text-lg text-zinc-400">
+            Describe a component in plain English and get production-ready React
+            code in seconds.
+          </p>
         </motion.div>
-      )}
 
-      {componentCode && (
-        <div className="mt-8 w-full max-w-4xl">
-          <div className="mb-4">
-            <h3 className="mb-2 text-xl font-semibold text-[#00B8D9]">
-              Component Preview
-            </h3>
-            <div
-              className="rounded-lg bg-white p-4 shadow-lg"
-              style={{ minHeight: "300px" }}
-            >
-              New Feature Coming soon
+        <motion.div
+          className="rounded-2xl border border-white/10 bg-[#111117] p-2"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <form onSubmit={handleSubmit}>
+            <div className="flex gap-2 p-2">
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Describe the component you want to generate..."
+                className="flex-1 rounded-xl bg-white/5 px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none ring-1 ring-white/10 transition-all focus:ring-[#00D4FF]/50"
+              />
+              <button
+                type="submit"
+                disabled={loading || !prompt.trim()}
+                className="flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black transition-all hover:bg-zinc-100 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {loading ? (
+                  <ClipLoader color="#000" size={16} loading />
+                ) : (
+                  <>
+                    Generate
+                    <FaArrowRight className="text-xs" />
+                  </>
+                )}
+              </button>
             </div>
-          </div>
+          </form>
 
-          <motion.button
-            onClick={() => setShowCode(!showCode)}
-            className="mt-6 flex items-center rounded-lg bg-[#00B8D9] p-3 text-white transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
-            initial={{ scale: 0.95 }}
-            animate={{ scale: 1 }}
-            whileHover={{ scale: 1.05 }}
-          >
-            {showCode ? (
-              <FaEyeSlash className="mr-2" />
-            ) : (
-              <FaEye className="mr-2" />
-            )}
-            {showCode ? "Hide Code" : "Show Code"}
-          </motion.button>
-
-          {showCode && (
-            <div className="mx-auto my-4 w-full max-w-4xl">
-              <pre className="whitespace-pre-wrap rounded-lg bg-gray-800 p-4 text-white">
-                <code>{componentCode}</code>
-              </pre>
-              <CopyToClipboard text={componentCode ?? ""}>
-                <motion.button
-                  className="mt-6 flex items-center rounded-lg bg-[#00B8D9] p-3 text-white transition duration-300 ease-in-out hover:bg-[#0077a1] focus:outline-none focus:ring-4 focus:ring-[#0077a1]/50"
-                  initial={{ scale: 0.95 }}
-                  animate={{ scale: 1 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <FaCopy className="mr-2" />
-                  Copy
-                </motion.button>
-              </CopyToClipboard>
+          {/* Example prompts */}
+          {!componentCode && !loading && (
+            <div className="border-t border-white/8 p-4">
+              <p className="mb-3 text-xs text-zinc-600">Try an example:</p>
+              <div className="flex flex-wrap gap-2">
+                {examplePrompts.map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setPrompt(p)}
+                    className="rounded-lg border border-white/8 bg-white/5 px-3 py-1.5 text-xs text-zinc-400 transition-all hover:border-white/20 hover:text-white"
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
-        </div>
-      )}
-
-      {error && (
-        <motion.div
-          className="mt-6 text-red-500"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {error}
         </motion.div>
-      )}
-    </div>
+
+        {/* Error */}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="mt-4 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400"
+            >
+              {error}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Result */}
+        <AnimatePresence>
+          {componentCode && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="mt-4 rounded-2xl border border-white/10 bg-[#111117] overflow-hidden"
+            >
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+                <div className="flex items-center gap-2 text-sm text-zinc-400">
+                  <FaCode className="text-[#00D4FF]" />
+                  <span>Generated component</span>
+                </div>
+                <CopyToClipboard text={componentCode} onCopy={handleCopy}>
+                  <button className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-1.5 text-xs font-medium text-zinc-300 transition-all hover:bg-white/10 hover:text-white">
+                    {copied ? (
+                      <>
+                        <FaCheck className="text-green-400" />
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <FaCopy />
+                        Copy code
+                      </>
+                    )}
+                  </button>
+                </CopyToClipboard>
+              </div>
+              <pre className="max-h-96 overflow-auto p-6 text-sm leading-relaxed text-zinc-300">
+                <code>{componentCode}</code>
+              </pre>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </section>
   );
 }
 
